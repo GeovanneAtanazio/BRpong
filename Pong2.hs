@@ -51,18 +51,18 @@ playerDetect (x, y) radius game = userPlayer || cpuPlayer
         where
             pCpu = playerCPU game
             pUser = playerUSER game          
-            cpuPlayer = ((x - radius < -fromIntegral 260)&&((y < 150) && (y > 150)))
-            userPlayer = ((x - radius > fromIntegral 260)&&((y < 150) && (y > 150)))
+            cpuPlayer = ((x - radius < -fromIntegral 260)&&((y < pCpu) && (y > pCpu)))
+            userPlayer = ((x - radius > fromIntegral 260)&&((y < pUser) && (y > pUser)))
 -- (NÃO FUNCIONA) Detecta colisões com os jogadores 
 playerCollision :: BRpong -> BRpong
 playerCollision game = game {vector = (vx', vy')}
         where
             radius = 10
             (vx, vy) = vector game
-            vx' = if  (playerDetect (vector game) radius game)
+            vx' = if  (playerDetect (point game) radius game)
                 then (-vx)
                 else (vx)
-            vy' = if (playerDetect (vector game) radius game)
+            vy' = if (playerDetect (point game) radius game)
                 then (-vy)
                 else (vy)
 -- (FUNCIONANDO) Movimenta o jogador do usuario
